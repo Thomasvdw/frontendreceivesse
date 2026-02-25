@@ -1,7 +1,26 @@
 const SSE_URL_ENDPOINT = "http://localhost:3000/events";
-const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+const REFRESH_INTERVAL_MS = 5 * 1000; // 5 seconds
+
+let eventSource = null;
+const lastMessageElement = document.getElementById("last-message");
+
+function setLastMessage(value) {
+  if (!lastMessageElement) {
+    return;
+  }
+
+  lastMessageElement.textContent = `Last message: ${value}`;
+}
+
+function closeSseConnection() {
+  if (eventSource) {
+    eventSource.close();
+    eventSource = null;
+  }
+}
 
 function connectSse(url) {
+  closeSseConnection();
   eventSource = new EventSource(url);
 
   eventSource.onopen = () => {
@@ -12,8 +31,10 @@ function connectSse(url) {
     try {
       const payload = JSON.parse(event.data);
       console.log("SSE message:", payload);
+      setLastMessage(JSON.stringify(payload));
     } catch {
       console.log("SSE message (text):", event.data);
+      setLastMessage(event.data);
     }
   };
 
@@ -27,13 +48,16 @@ function connectSse(url) {
 }
 
 async function refreshSseConnection() {
+  console.log("Refreshing SSE connection...");
   try {
     connectSse(SSE_URL_ENDPOINT);
   } catch (error) {
     console.error(error);
+    setLastMessage("error while connecting");
   }
 }
 
+window.addEventListener("beforeunload", closeSseConnection);
 
 refreshSseConnection();
 setInterval(refreshSseConnection, REFRESH_INTERVAL_MS);
