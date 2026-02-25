@@ -1,15 +1,50 @@
-const SSE_URL_ENDPOINT = "https://stream.wikimedia.org/v2/stream/recentchange";
-const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 seconds
+const SSE_URL_ENDPOINT = 'http://localhost:3000/locations/S0017DE';
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
 let eventSource = null;
-const lastMessageElement = document.getElementById("last-message");
+const locationIdElement = document.getElementById('location-id');
+const welcomeElement = document.getElementById('welcome');
+const connectorsElement = document.getElementById('connectors');
+const priceElement = document.getElementById('price');
+const paymentsElement = document.getElementById('payments');
 
-function setLastMessage(value) {
-  if (!lastMessageElement) {
-    return;
+function renderLocation(location) {
+  if (locationIdElement) {
+    locationIdElement.textContent = location.locationId || 'Unknown location';
   }
 
-  lastMessageElement.textContent = `Last message: ${value}`;
+  if (welcomeElement) {
+    welcomeElement.textContent = `Welcome to ${location.locationName || 'our location'}`;
+  }
+
+  if (connectorsElement) {
+    connectorsElement.textContent = `${location.countAvailableEvse}/${location.countTotalEvse}`;
+  }
+
+  const energyPrice = location?.tariff?.priceComponents?.find(
+    (component) => component.type?.toLowerCase() === 'energy'
+  )?.price;
+
+  if (priceElement) {
+    if (typeof energyPrice === 'number') {
+      priceElement.textContent = `${energyPrice.toFixed(2)} EUR/kWh`;
+    } else {
+      priceElement.textContent = '-- EUR/kWh';
+    }
+  }
+
+  if (paymentsElement) {
+    paymentsElement.innerHTML = '';
+    const methods = Array.isArray(location.paymentMethods)
+      ? location.paymentMethods
+      : [];
+
+    methods.forEach((method) => {
+      const listItem = document.createElement('li');
+      listItem.textContent = method;
+      paymentsElement.appendChild(listItem);
+    });
+  }
 }
 
 function closeSseConnection() {
@@ -24,42 +59,38 @@ function connectSse(url) {
   eventSource = new EventSource(url);
 
   eventSource.onopen = () => {
-    console.log("SSE connected");
+    console.log('SSE connected');
   };
 
   eventSource.onmessage = (event) => {
     try {
       const payload = JSON.parse(event.data);
-      if (payload.server_name === "en.wikipedia.org") {
-        console.log("SSE message:", payload);
-        setLastMessage(JSON.stringify(payload.title));  
-      }
+      console.log('SSE message:', payload);
+      renderLocation(payload);
     } catch {
-      console.log("SSE message (text):", event.data);
-      setLastMessage(event.data);
+      console.log('SSE message (text):', event.data);
     }
   };
 
   eventSource.onerror = (error) => {
-    console.error("SSE error", error);
+    console.error('SSE error', error);
   };
 
-  eventSource.addEventListener("ping", (event) => {
-    console.log("SSE ping:", event.data);
+  eventSource.addEventListener('ping', (event) => {
+    console.log('SSE ping:', event.data);
   });
 }
 
 async function refreshSseConnection() {
-  console.log("Refreshing SSE connection...");
+  console.log('Refreshing SSE connection...');
   try {
     connectSse(SSE_URL_ENDPOINT);
   } catch (error) {
     console.error(error);
-    setLastMessage("error while connecting");
   }
 }
 
-window.addEventListener("beforeunload", closeSseConnection);
+window.addEventListener('beforeunload', closeSseConnection);
 
 refreshSseConnection();
 setInterval(refreshSseConnection, REFRESH_INTERVAL_MS);

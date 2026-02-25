@@ -1,15 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frontend</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <h1>Frontend Project</h1>
-  <p id="last-message">Last message: waiting...</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onsite Display</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="screen">
+      <div class="location-id" id="location-id"></div>
 
-  <script src="script.js"></script>
-</body>
+      <section class="welcome-wrap" aria-live="polite">
+        <h1 id="welcome"></h1>
+      </section>
+
+      <section class="bottom-panel" aria-live="polite">
+        <div class="panel-card">
+          <p class="panel-label">Connectors Available</p>
+          <p class="panel-value" id="connectors">0/0</p>
+        </div>
+
+        <div class="panel-card">
+          <p class="panel-label">Charging Price</p>
+          <p class="panel-value" id="price">-- EUR/kWh</p>
+        </div>
+
+        <div class="panel-card panel-payments">
+          <p class="panel-label">Accepted Payment Methods</p>
+          <ul id="payments"></ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
 </html>
