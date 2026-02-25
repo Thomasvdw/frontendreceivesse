@@ -1,5 +1,5 @@
-const SSE_URL_ENDPOINT = "http://localhost:3000/events";
-const REFRESH_INTERVAL_MS = 5 * 1000; // 5 seconds
+const SSE_URL_ENDPOINT = "https://stream.wikimedia.org/v2/stream/recentchange";
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 seconds
 
 let eventSource = null;
 const lastMessageElement = document.getElementById("last-message");
@@ -30,8 +30,10 @@ function connectSse(url) {
   eventSource.onmessage = (event) => {
     try {
       const payload = JSON.parse(event.data);
-      console.log("SSE message:", payload);
-      setLastMessage(JSON.stringify(payload));
+      if (payload.server_name === "en.wikipedia.org") {
+        console.log("SSE message:", payload);
+        setLastMessage(JSON.stringify(payload.title));  
+      }
     } catch {
       console.log("SSE message (text):", event.data);
       setLastMessage(event.data);
