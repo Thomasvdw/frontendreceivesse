@@ -1,6 +1,6 @@
 const SSE_URL_ENDPOINT = 'http://localhost:3000/locations/S0017DE';
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
-const CHANGE_LANGUAGE_INTERVAL_MS = 10 * 1000; // 10 seconds for demo purposes
+const CHANGE_LANGUAGE_INTERVAL_MS = 10 * 5000; //  5 seconds for demo purposes
 
 let eventSource = null;
 const locationIdElement = document.getElementById('location-id');
