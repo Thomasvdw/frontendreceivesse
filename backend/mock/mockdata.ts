@@ -6,6 +6,7 @@ export const mockLocations = [
     locationId: 'S0017DE',
     locationName: 'Milence Charging Hub Venlo',
     status: 'Available',
+    languages: ['en', 'nl'],
     countAvailableEvse: 2,
     countTotalEvse: 5,
     availability: [
@@ -32,8 +33,9 @@ export const mockLocations = [
   },
   {
     locationId: 'S0018NL',
-    locationName: 'Milence Charging Hub Venlo',
+    locationName: 'Milence Charging Hub Amersfoort',
     status: 'Occupied',
+    languages: ['en', 'nl'],
     countAvailableEvse: 0,
     countTotalEvse: 5,
     availability: [

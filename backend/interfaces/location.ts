@@ -6,6 +6,7 @@
 export interface Location {
   locationId: string;
   locationName: string;
+  languages: string[];
   status: string;
   countAvailableEvse: number;
   countTotalEvse: number;

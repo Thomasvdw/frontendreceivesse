@@ -37,6 +37,59 @@ body {
   color: #9bb4d3;
 }
 
+.change-location-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(16, 28, 44, 0.55);
+  color: #d8e5f7;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+}
+
+#location-form {
+  position: absolute;
+  top: 4.7rem;
+  right: 2rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(16, 28, 44, 0.92);
+  padding: 0.5rem;
+}
+
+#location-form[hidden] {
+  display: none;
+}
+
+#location-form label {
+  font-size: 0.75rem;
+  color: #9bb4d3;
+}
+
+#location-form input {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(8, 14, 23, 0.85);
+  color: #f5f8ff;
+  padding: 0.35rem 0.5rem;
+}
+
+#location-form button {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(30, 54, 86, 0.8);
+  color: #f5f8ff;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+}
+
 .welcome-wrap {
   position: absolute;
   top: 6.5rem;
@@ -49,7 +102,7 @@ body {
   z-index: 2;
 }
 
-#welcome {
+.welcome {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.8rem);
   font-weight: 700;

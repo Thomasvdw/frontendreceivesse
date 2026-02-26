@@ -37,5 +37,5 @@ const server = createServer((req: IncomingMessage, res: ServerResponse) => {
 });
 
 server.listen(3000, () => {
-  console.log('SSE running on http://localhost:3000/locations/{locationId}');
+  console.log('SSE running on http://localhost:3000/');
 });

@@ -9,9 +9,26 @@
   <body>
     <main class="screen">
       <div class="location-id" id="location-id"></div>
+      <button id="change-location" class="change-location-button" type="button">
+        Change location
+      </button>
+
+      <form id="location-form" hidden>
+        <label for="location-id-input">Location ID</label>
+        <input
+          id="location-id-input"
+          name="locationId"
+          type="text"
+          pattern="S[0-9]{4}[A-Z]{2}"
+          placeholder="S0001NL"
+          required
+        />
+        <button type="submit">Save</button>
+      </form>
 
       <section class="welcome-wrap" aria-live="polite">
-        <h1 id="welcome" data-i18n="locationWelcome"></h1>
+        <h1 class="welcome" data-i18n="locationWelcome"></h1>
+        <h1 class="welcome" id="welcome">&nbsp;</h1>
       </section>
 
       <section class="bottom-panel" aria-live="polite">
@@ -36,7 +53,6 @@
       </section>
     </main>
 
-    <script src="i18n.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
