@@ -1,5 +1,6 @@
 const SSE_URL_ENDPOINT = 'http://localhost:3000/locations/S0017DE';
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+const CHANGE_LANGUAGE_INTERVAL_MS = 10 * 1000; // 10 seconds for demo purposes
 
 let eventSource = null;
 const locationIdElement = document.getElementById('location-id');
@@ -14,7 +15,7 @@ function renderLocation(location) {
   }
 
   if (welcomeElement) {
-    welcomeElement.textContent = `Welcome to ${location.locationName || 'our location'}`;
+    welcomeElement.textContent = `${i18n.t('locationWelcome')} ${location.locationName}`;
   }
 
   if (connectorsElement) {
@@ -93,4 +94,14 @@ async function refreshSseConnection() {
 window.addEventListener('beforeunload', closeSseConnection);
 
 refreshSseConnection();
+
+// Refresh SSE connection every 5 minutes to prevent timeouts (optional, depends on server configuration)
 setInterval(refreshSseConnection, REFRESH_INTERVAL_MS);
+
+// Refresh language every 10 seconds for demo purposes
+setInterval(() => {
+  const next = i18n.languages.shift(); // take the first language
+  i18n.setLanguage(next); // set it
+  i18n.languages.push(next); // put it at the end
+  i18n.updateTranslations(); // update the UI
+}, CHANGE_LANGUAGE_INTERVAL_MS);

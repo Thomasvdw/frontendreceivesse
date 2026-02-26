@@ -11,27 +11,32 @@
       <div class="location-id" id="location-id"></div>
 
       <section class="welcome-wrap" aria-live="polite">
-        <h1 id="welcome"></h1>
+        <h1 id="welcome" data-i18n="locationWelcome"></h1>
       </section>
 
       <section class="bottom-panel" aria-live="polite">
         <div class="panel-card">
-          <p class="panel-label">Connectors Available</p>
-          <p class="panel-value" id="connectors">0/0</p>
+          <p class="panel-label" data-i18n="connectorsAvailable">
+            Connectors Available
+          </p>
+          <p class="panel-value" id="connectors"></p>
         </div>
 
         <div class="panel-card">
-          <p class="panel-label">Charging Price</p>
-          <p class="panel-value" id="price">-- EUR/kWh</p>
+          <p class="panel-label" data-i18n="chargingPrice">Charging Price</p>
+          <p class="panel-value" id="price"></p>
         </div>
 
         <div class="panel-card panel-payments">
-          <p class="panel-label">Accepted Payment Methods</p>
+          <p class="panel-label" data-i18n="acceptedPaymentMethods">
+            Accepted Payment Methods
+          </p>
           <ul id="payments"></ul>
         </div>
       </section>
     </main>
 
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
